@@ -10,9 +10,6 @@ const playButton = document.querySelector("#game_options > button");
 // CREATE A SCORE COUNTER
 let score = 0;
 
-// CREATE A CHECKER TO SEE IF A BOMB IS FOUND. I NEED IT TO AVOID "YOU WIN" OUTPUT AFTER "YOU LOOSE", IF LOOSING ON THE LAST POSSIBLE CELL
-let bombFound = false;
-
 // STARTS A NEW GAME WHEN A CLICK ON THE PLAY BUTTON OCCURS
 playButton.addEventListener("click", function() {
 
@@ -88,6 +85,9 @@ const remainingBombs = document.createElement("div");
 playButton.addEventListener("click", function () {
   console.clear();
   score = 0;
+
+  // CREATE A CHECKER TO SEE IF A BOMB IS FOUND. I NEED IT TO AVOID "YOU WIN" OUTPUT AFTER "YOU LOOSE", IF LOOSING ON THE LAST POSSIBLE CELL
+  let bombFound = false;
   remainingBombs.id = "remaining_bombs";
 
   // create an empty array that will contain the bombs
@@ -202,7 +202,7 @@ playButton.addEventListener("click", function () {
           createdCells[i + cellsInARow].click();
         }
       }
-      
+
       // else if the cell has adjacent bombs calculates the number of bombs around it and shows it
       else {
 
