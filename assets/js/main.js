@@ -110,177 +110,171 @@ playButton.addEventListener("click", function () {
     // listens for the click on a cell
     thisCell.addEventListener("click", function() {
 
-      // if the cell was already clicked or is flagged as a possible bomb, nothing happens and waits for another click
-      if (this.classList.contains("alreadyClicked") || this.classList.contains("marked")) {
-        return;
-      }
-      // if the cell is a bomb sets some style, outputs a message to start a new game or not
-      if (generatedBombs.includes(i)) {
-        for (let i = 0; i < createdCells.length; i++) {
-          if (generatedBombs.includes(i)) {
-            createdCells[i].innerHTML = '<i class="fa-solid fa-bomb"></i>';
-            createdCells[i].style.color = "red";
-            createdCells[i].style.backgroundColor = "#292745";
-            createdCells[i].classList.add("alreadyClicked");
-          }
-        }
-        if(confirm("HAI PERSO. VUOI FARE UN'ALTRA PARTITA?")) {
-          bombFound = true;
-          setTimeout(() => {
-            playButton.click();
-          }, 1000);
-        } else {
-          setTimeout(() => {
-            remainingBombs.innerHTML = ""
-            containerElement.innerHTML = "";
-          }, 1000);
-        }
-      }
-      // else if the cell has no adjacent bombs, then the click expands to the adjacent cells also
-      else if (!((i % cellsInARow != 0 && generatedBombs.includes(i - cellsInARow - 1)) || generatedBombs.includes(i - cellsInARow) || ((i + 1) % cellsInARow != 0 && generatedBombs.includes(i - cellsInARow + 1)) || (i % cellsInARow != 0 && generatedBombs.includes(i - 1)) || ((i + 1) % cellsInARow != 0 && generatedBombs.includes(i + 1)) || (i % cellsInARow != 0 && generatedBombs.includes(i + cellsInARow - 1)) || generatedBombs.includes(i + cellsInARow) || ((i + 1) % cellsInARow != 0 && generatedBombs.includes(i + cellsInARow + 1)))) {
-        this.classList.add("alreadyClicked");
-        this.style.backgroundColor = "gray";
-        this.style.border = "1px solid #e1e1e1";
+      if (!bombFound) {
 
-        if ((i >= cellsInARow) && (i < createdCells.length - cellsInARow) && (i % cellsInARow != 0) && ((i + 1) % cellsInARow != 0)) {
-          createdCells[i - cellsInARow - 1].click();
-          createdCells[i - cellsInARow].click();
-          createdCells[i - cellsInARow + 1].click();
-          createdCells[i - 1].click();
-          createdCells[i + 1].click();
-          createdCells[i + cellsInARow - 1].click();
-          createdCells[i + cellsInARow].click();
-          createdCells[i + cellsInARow + 1].click();
-        } else if (i < cellsInARow) {
-          if (i == 0) {
-            createdCells[i + 1].click();
-            createdCells[i + cellsInARow].click();
-            createdCells[i + cellsInARow + 1].click();
-          } else if (i == cellsInARow - 1) {
-            createdCells[i - 1].click();
-            createdCells[i + cellsInARow - 1].click();
-            createdCells[i + cellsInARow].click();
-          } else {
-            createdCells[i - 1].click();
-            createdCells[i + 1].click();
-            createdCells[i + cellsInARow - 1].click();
-            createdCells[i + cellsInARow].click();
-            createdCells[i + cellsInARow + 1].click();
+        // if the cell was already clicked or is flagged as a possible bomb, nothing happens and waits for another click
+        if (this.classList.contains("alreadyClicked") || this.classList.contains("marked")) {
+          return;
+        }
+        // if the cell is a bomb sets some style, outputs a message to start a new game or not
+        if (generatedBombs.includes(i)) {
+          for (let i = 0; i < createdCells.length; i++) {
+            if (generatedBombs.includes(i)) {
+              bombFound = true;
+              createdCells[i].innerHTML = '<i class="fa-solid fa-bomb"></i>';
+              createdCells[i].style.color = "red";
+              createdCells[i].style.backgroundColor = "#292745";
+              createdCells[i].classList.add("alreadyClicked");
+            }
           }
-        } else if (i >= createdCells.length - cellsInARow) {
-          if (i == createdCells.length - cellsInARow) {
-            createdCells[i - cellsInARow].click();
-            createdCells[i - cellsInARow + 1].click();
-            createdCells[i + 1].click();
-          } else if (i == createdCells.length - 1) {
-            createdCells[i - cellsInARow - 1].click();
-            createdCells[i - cellsInARow].click();
-            createdCells[i - 1].click();
-          } else {
+          if(confirm("HAI PERSO. VUOI FARE UN'ALTRA PARTITA?")) {
+            setTimeout(() => {
+              playButton.click();
+            }, 1000);
+          }
+        }
+        // else if the cell has no adjacent bombs, then the click expands to the adjacent cells also
+        else if (!((i % cellsInARow != 0 && generatedBombs.includes(i - cellsInARow - 1)) || generatedBombs.includes(i - cellsInARow) || ((i + 1) % cellsInARow != 0 && generatedBombs.includes(i - cellsInARow + 1)) || (i % cellsInARow != 0 && generatedBombs.includes(i - 1)) || ((i + 1) % cellsInARow != 0 && generatedBombs.includes(i + 1)) || (i % cellsInARow != 0 && generatedBombs.includes(i + cellsInARow - 1)) || generatedBombs.includes(i + cellsInARow) || ((i + 1) % cellsInARow != 0 && generatedBombs.includes(i + cellsInARow + 1)))) {
+          this.classList.add("alreadyClicked");
+          this.style.backgroundColor = "gray";
+          this.style.border = "1px solid #e1e1e1";
+
+          if ((i >= cellsInARow) && (i < createdCells.length - cellsInARow) && (i % cellsInARow != 0) && ((i + 1) % cellsInARow != 0)) {
             createdCells[i - cellsInARow - 1].click();
             createdCells[i - cellsInARow].click();
             createdCells[i - cellsInARow + 1].click();
             createdCells[i - 1].click();
             createdCells[i + 1].click();
-          }
-        } else if (i % cellsInARow == 0) {
-          createdCells[i - cellsInARow].click();
-          createdCells[i - cellsInARow + 1].click();
-          createdCells[i + 1].click();
-          createdCells[i + cellsInARow].click();
-          createdCells[i + cellsInARow + 1].click();
-        } else {
-          createdCells[i - cellsInARow - 1].click();
-          createdCells[i - cellsInARow].click();
-          createdCells[i - 1].click();
-          createdCells[i + cellsInARow - 1].click();
-          createdCells[i + cellsInARow].click();
-        }
-      }
-
-      // else if the cell has adjacent bombs calculates the number of bombs around it and shows it
-      else {
-
-        this.classList.add("alreadyClicked");
-
-        let adjacentBombs = 0;
-        if (i % cellsInARow != 0 && generatedBombs.includes(i - cellsInARow - 1)) {
-          adjacentBombs++;
-        }
-        if (generatedBombs.includes(i - cellsInARow)) {
-          adjacentBombs++;
-        }
-        if ((i + 1) % cellsInARow != 0 && generatedBombs.includes(i - cellsInARow + 1)) {
-          adjacentBombs++;
-        }
-        if (i % cellsInARow != 0 && generatedBombs.includes(i - 1)) {
-          adjacentBombs++;
-        }
-        if ((i + 1) % cellsInARow != 0 && generatedBombs.includes(i + 1)) {
-          adjacentBombs++;
-        }
-        if (i % cellsInARow != 0 && generatedBombs.includes(i + cellsInARow - 1)) {
-          adjacentBombs++;
-        }
-        if (generatedBombs.includes(i + cellsInARow)) {
-          adjacentBombs++;
-        }
-        if ((i + 1) % cellsInARow != 0 && generatedBombs.includes(i + cellsInARow + 1)) {
-          adjacentBombs++;
-        }
-        switch(adjacentBombs) {
-          case 1:
-            this.style.color = "blue";
-            break;
-          case 2:
-            this.style.color = "red";
-            break;
-          case 3:
-            this.style.color = "green";
-            break;
-          case 4:
-            this.style.color = "purple";
-            break;
-          case 5:
-            this.style.color = "maroon";
-            break;
-          case 6:
-            this.style.color = "turquoise";
-            break;
-          case 7:
-            this.style.color = "black";
-            break;
-          case 8:
-            this.style.color = "#e1e1e1";
-            break;
-        }
-        this.style.backgroundColor = "gray";
-        this.style.border = "1px solid #e1e1e1"
-        this.innerText = adjacentBombs;
-      }
-
-      // increase the score
-      score++;
-
-      // check if the score equals the number of "non bombs" cells. if yes you win
-      if (score == createdCells.length - generatedBombs.length && bombFound != true) {
-        for (let i = 0; i < createdCells.length; i++) {
-          if (generatedBombs.includes(i)) {
-            createdCells[i].innerHTML = '<i class="fa-solid fa-bomb"></i>';
-            createdCells[i].style.color = "red";
-            createdCells[i].style.backgroundColor = "#292745";
-            createdCells[i].classList.add("alreadyClicked");
+            createdCells[i + cellsInARow - 1].click();
+            createdCells[i + cellsInARow].click();
+            createdCells[i + cellsInARow + 1].click();
+          } else if (i < cellsInARow) {
+            if (i == 0) {
+              createdCells[i + 1].click();
+              createdCells[i + cellsInARow].click();
+              createdCells[i + cellsInARow + 1].click();
+            } else if (i == cellsInARow - 1) {
+              createdCells[i - 1].click();
+              createdCells[i + cellsInARow - 1].click();
+              createdCells[i + cellsInARow].click();
+            } else {
+              createdCells[i - 1].click();
+              createdCells[i + 1].click();
+              createdCells[i + cellsInARow - 1].click();
+              createdCells[i + cellsInARow].click();
+              createdCells[i + cellsInARow + 1].click();
+            }
+          } else if (i >= createdCells.length - cellsInARow) {
+            if (i == createdCells.length - cellsInARow) {
+              createdCells[i - cellsInARow].click();
+              createdCells[i - cellsInARow + 1].click();
+              createdCells[i + 1].click();
+            } else if (i == createdCells.length - 1) {
+              createdCells[i - cellsInARow - 1].click();
+              createdCells[i - cellsInARow].click();
+              createdCells[i - 1].click();
+            } else {
+              createdCells[i - cellsInARow - 1].click();
+              createdCells[i - cellsInARow].click();
+              createdCells[i - cellsInARow + 1].click();
+              createdCells[i - 1].click();
+              createdCells[i + 1].click();
+            }
+          } else if (i % cellsInARow == 0) {
+            createdCells[i - cellsInARow].click();
+            createdCells[i - cellsInARow + 1].click();
+            createdCells[i + 1].click();
+            createdCells[i + cellsInARow].click();
+            createdCells[i + cellsInARow + 1].click();
+          } else {
+            createdCells[i - cellsInARow - 1].click();
+            createdCells[i - cellsInARow].click();
+            createdCells[i - 1].click();
+            createdCells[i + cellsInARow - 1].click();
+            createdCells[i + cellsInARow].click();
           }
         }
-        if(confirm("HAI VINTO!!! VUOI FARE UN'ALTRA PARTITA?")) {
-          setTimeout(() => {
-            playButton.click();
-          }, 1000);
-        } else {
-          setTimeout(() => {
-            remainingBombs.innerHTML = ""
-            containerElement.innerHTML = "";
-          }, 1000);
+
+        // else if the cell has adjacent bombs calculates the number of bombs around it and shows it
+        else {
+
+          this.classList.add("alreadyClicked");
+
+          let adjacentBombs = 0;
+          if (i % cellsInARow != 0 && generatedBombs.includes(i - cellsInARow - 1)) {
+            adjacentBombs++;
+          }
+          if (generatedBombs.includes(i - cellsInARow)) {
+            adjacentBombs++;
+          }
+          if ((i + 1) % cellsInARow != 0 && generatedBombs.includes(i - cellsInARow + 1)) {
+            adjacentBombs++;
+          }
+          if (i % cellsInARow != 0 && generatedBombs.includes(i - 1)) {
+            adjacentBombs++;
+          }
+          if ((i + 1) % cellsInARow != 0 && generatedBombs.includes(i + 1)) {
+            adjacentBombs++;
+          }
+          if (i % cellsInARow != 0 && generatedBombs.includes(i + cellsInARow - 1)) {
+            adjacentBombs++;
+          }
+          if (generatedBombs.includes(i + cellsInARow)) {
+            adjacentBombs++;
+          }
+          if ((i + 1) % cellsInARow != 0 && generatedBombs.includes(i + cellsInARow + 1)) {
+            adjacentBombs++;
+          }
+          switch(adjacentBombs) {
+            case 1:
+              this.style.color = "blue";
+              break;
+            case 2:
+              this.style.color = "red";
+              break;
+            case 3:
+              this.style.color = "green";
+              break;
+            case 4:
+              this.style.color = "purple";
+              break;
+            case 5:
+              this.style.color = "maroon";
+              break;
+            case 6:
+              this.style.color = "turquoise";
+              break;
+            case 7:
+              this.style.color = "black";
+              break;
+            case 8:
+              this.style.color = "#e1e1e1";
+              break;
+          }
+          this.style.backgroundColor = "gray";
+          this.style.border = "1px solid #e1e1e1"
+          this.innerText = adjacentBombs;
+        }
+
+        // increase the score
+        score++;
+        
+
+        // check if the score equals the number of "non bombs" cells. if yes you win
+        if (score == createdCells.length - generatedBombs.length && bombFound != true) {
+          for (let i = 0; i < createdCells.length; i++) {
+            if (generatedBombs.includes(i)) {
+              createdCells[i].innerHTML = '<i class="fa-solid fa-bomb"></i>';
+              createdCells[i].style.color = "red";
+              createdCells[i].style.backgroundColor = "#292745";
+              createdCells[i].classList.add("alreadyClicked");
+            }
+          }
+          if(confirm("HAI VINTO!!! VUOI FARE UN'ALTRA PARTITA?")) {
+            setTimeout(() => {
+              playButton.click();
+            }, 1000);
+          }
         }
       }
     });
@@ -288,7 +282,7 @@ playButton.addEventListener("click", function () {
     // event listener to add the "marked as bomb" background color with right click
     thisCell.addEventListener("contextmenu", function(e) {
       e.preventDefault();
-      if (!this.classList.contains("alreadyClicked")) {
+      if (!this.classList.contains("alreadyClicked") && !bombFound) {
         this.classList.toggle("marked");
         const markedCells = document.querySelectorAll(".marked");
         remainingBombs.innerHTML = `Bombe rimanenti: ${generatedBombs.length - markedCells.length}`;
