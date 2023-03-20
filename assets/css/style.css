@@ -1,0 +1,274 @@
+/* #region Common */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  /* outline: 1px solid black; */
+}
+
+body {
+  font-family: 'Josefin Sans', sans-serif;
+  color: #292745
+}
+
+img {
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+/* #endregion Common */
+
+/* #region Utility */
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  width: 96%;
+  max-width: 1320px;
+  height: 100%;
+  margin: auto;
+}
+
+.cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  aspect-ratio: 1 / 1;
+  border: 1px solid gray;
+  cursor: pointer;
+  background-color: #1e1e1e;
+  color: #e1e1e1;
+  font-weight: 700;
+  /* box-shadow: inset 0 0 6px 1px #5eabd4; */
+}
+
+.marked {
+  background-color: red;
+  color: #292745;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+#remaining_bombs {
+  position: fixed;
+  top: 170px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  color: red;
+  font-size: 1.25rem;
+  text-align: center;
+}
+
+#check_win {
+  position: fixed;
+  top: 210px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  padding: 0.25rem 1rem;
+  background-color: transparent;
+  border: 1px solid #e1e1e1;
+  color: #e1e1e1;
+  border-radius: 5px;
+  width: max-content;
+  cursor: pointer;
+}
+
+/* #endregion Utility */
+
+/* #region #app_header */
+
+#app_header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0.75rem;
+  height: 150px;
+  /* background-color: #5eabd4; */
+  background: #e1e1e1;
+  background: linear-gradient(180deg, #e1e1e1 0%, #e1e1e1 95%, #292745 100%);
+}
+
+#game_name,
+#game_options {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+#game_name > .logo {
+  height: 80px;
+}
+
+#game_name > span {
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+#game_name,
+#game_options {
+  flex-grow: 1;
+}
+
+#game_options label {
+  font-size: 1.25rem;
+}
+
+#game_options .level_selector {
+  margin: 0 0.75rem;
+}
+
+#level,
+#game_options button {
+  height: 30px;
+  border: 1px solid #292745;
+  border-radius: 5px;
+  padding: 0 1rem;
+  background-color: transparent;
+  color: #292745;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+#game_options button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: breath 1s infinite;
+}
+
+#level:hover,
+#game_options button:hover {
+  background-color: #292745;
+  color: #e1e1e1;
+  animation: none;
+}
+
+/* #endregion #app_header */
+
+/* #region #app_main */
+
+#app_main {
+  /* HEIGHTS TO SUBTRACT: #app_header and #app_footer */
+  height: calc(100vh - 150px - 30px);
+  height: calc(100svh - 150px - 30px);
+  background-color: #292745;
+  padding: 1rem 0;
+}
+
+/* #endregion #app_main */
+
+/* #region #app_footer */
+
+#app_footer {
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #e1e1e1;
+  background: linear-gradient(360deg, #e1e1e1 0%, #e1e1e1 80%, #292745 100%);
+}
+
+/* #endregion #app_footer */
+
+/* #region Media Queries */
+
+@media screen and (min-width: 400px) {
+  
+  #check_win {
+    top: 190px;
+    transform: translate(-50%, 0);
+    padding: 0.25rem 1rem;
+  }
+  
+}
+
+@media screen and (min-width: 440px) {
+
+  #remaining_bombs {
+    top: 80px;
+    left: 2%;
+    transform: translate(0, 0);
+  }
+
+  #check_win {
+    top: 80px;
+    left: 98%;
+    transform: translate(-100%, 0);
+    color: #292745;
+    border: 1px solid #292745;
+  }
+  
+}
+
+@media screen and (min-width: 571px) {
+
+  .container {
+    width: unset;
+    aspect-ratio: 1 / 1;
+  }
+
+}
+
+@media screen and (min-width: 656px) {
+
+  #check_win {
+    top: 70px;
+    color: #e1e1e1;
+    border: 1px solid #e1e1e1;
+  }
+
+  #app_header {
+    height: 80px;
+    background: linear-gradient(180deg, #e1e1e1 0%, #e1e1e1 80%, #292745 100%);
+  }
+
+  #game_name,
+  #game_options {
+    flex-grow: 0;
+  }
+
+  #app_main {
+    height: calc(100vh - 80px - 30px);
+    height: calc(100svh - 80px - 30px);
+  }
+
+}
+
+@media screen and (min-width: 1024px) {
+
+  #remaining_bombs {
+    top: 50%;
+    left: 10%;
+    transform: translate(-50%, -50%);
+  }
+
+  #check_win {
+    top: 50%;
+    left: 90%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* #endregion Media Queries */
+
+/* #region Animations */
+
+@keyframes breath {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* #endregion Animations */
