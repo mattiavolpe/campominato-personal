@@ -202,6 +202,7 @@ playButton.addEventListener("click", function () {
           createdCells[i + cellsInARow].click();
         }
       }
+      
       // else if the cell has adjacent bombs calculates the number of bombs around it and shows it
       else {
 
