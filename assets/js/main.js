@@ -299,9 +299,11 @@ playButton.addEventListener("click", function () {
     // event listener to add the "marked as bomb" background color with right click
     thisCell.addEventListener("contextmenu", function(e) {
       e.preventDefault();
-      this.classList.toggle("marked");
-      const markedCells = document.querySelectorAll(".marked");
-      remainingBombs.innerHTML = `Bombe rimanenti: ${generatedBombs.length - markedCells.length}`;
+      if (!this.classList.contains("alreadyClicked")) {
+        this.classList.toggle("marked");
+        const markedCells = document.querySelectorAll(".marked");
+        remainingBombs.innerHTML = `Bombe rimanenti: ${generatedBombs.length - markedCells.length}`;
+      }
     });
   }
 });
