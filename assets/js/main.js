@@ -10,6 +10,9 @@ const playButton = document.querySelector("#game_options > button");
 // CREATE A SCORE COUNTER
 let score = 0;
 
+// CREATE A CHECKER TO SEE IF A BOMB IS FOUND. I NEED IT TO AVOID "YOU WIN" OUTPUT AFTER "YOU LOOSE", IF LOOSING ON THE LAST POSSIBLE CELL
+let bombFound = false;
+
 // STARTS A NEW GAME WHEN A CLICK ON THE PLAY BUTTON OCCURS
 playButton.addEventListener("click", function() {
 
@@ -126,6 +129,7 @@ playButton.addEventListener("click", function () {
         this.style.color = "#e1e1e1";
         this.style.backgroundColor = "#292745";
         if(confirm("HAI PERSO. VUOI FARE UN'ALTRA PARTITA?")) {
+          bombFound = true;
           setTimeout(() => {
             playButton.click();
           }, 1000);
@@ -262,7 +266,7 @@ playButton.addEventListener("click", function () {
       score++;
 
       // check if the score equals the number of "non bombs" cells. if yes you win
-      if (score == createdCells.length - generatedBombs.length) {
+      if (score == createdCells.length - generatedBombs.length && bombFound != true) {
         if(confirm("HAI VINTO!!! VUOI FARE UN'ALTRA PARTITA?")) {
           setTimeout(() => {
             playButton.click();
