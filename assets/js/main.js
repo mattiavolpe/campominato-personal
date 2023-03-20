@@ -55,7 +55,6 @@ function createNewGrid(totalCells, container) {
   // CREATES CELLS, ADD THE CELL CLASS, SET THE DIMENSION, INSERT THE INDEX NUMBER AND ADDS TO THE DOM
   for (let i = 1; i <= totalCells; i++) {
     const cellElement = document.createElement("div");
-    cellElement.id = `cell${i - 1}`;
     cellElement.classList.add("cell");
 
     // SETS THE DIMENSIONS DINAMICALLY TO MAKE THE GRID RESPONSIVE ALSO
@@ -63,15 +62,6 @@ function createNewGrid(totalCells, container) {
     containerElement.insertAdjacentElement("beforeend", cellElement);
   }
 }
-
-
-
-
-
-
-
-
-
 
 
 
@@ -126,7 +116,6 @@ playButton.addEventListener("click", function () {
       }
       // if the cell is a bomb sets some style, outputs a message to start a new game or not
       if (generatedBombs.includes(i)) {
-        console.log(createdCells, generatedBombs);
         for (let i = 0; i < createdCells.length; i++) {
           if (generatedBombs.includes(i)) {
             createdCells[i].innerHTML = '<i class="fa-solid fa-bomb"></i>';
