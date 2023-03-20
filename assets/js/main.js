@@ -126,8 +126,9 @@ playButton.addEventListener("click", function () {
       }
       // if the cell is a bomb sets some style, outputs a message to start a new game or not
       if (generatedBombs.includes(i)) {
-        this.style.color = "#e1e1e1";
+        this.style.color = "red";
         this.style.backgroundColor = "#292745";
+        this.innerHTML = '<i class="fa-solid fa-bomb"></i>';
         if(confirm("HAI PERSO. VUOI FARE UN'ALTRA PARTITA?")) {
           bombFound = true;
           setTimeout(() => {
