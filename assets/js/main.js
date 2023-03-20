@@ -64,18 +64,36 @@ function createNewGrid(totalCells, container) {
   }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 // HERE START THE EXPERIMENTAL IMPLEMENTATION
+
+// div that outputs the number of remaining bombs
 const remainingBombs = document.createElement("div");
-const checkWin = document.createElement("button");
 
 playButton.addEventListener("click", function () {
   console.clear();
   score = 0;
   remainingBombs.id = "remaining_bombs";
-  checkWin.id = "check_win";
+
+  // create an empty array that will contain the bombs
   let generatedBombs = [];
+
+  // select all the cells
   let createdCells = document.querySelectorAll(".cell");
 
+  // generate the bombs and check if they're already in the array
   for (let i = 1; i <= Math.round(createdCells.length * 20 / 100); i++) {
     let randomIndex = Math.floor(Math.random() * createdCells.length);
     while (generatedBombs.includes(randomIndex)) {
@@ -84,21 +102,26 @@ playButton.addEventListener("click", function () {
     generatedBombs.push(randomIndex);
   }
 
-  generatedBombs.sort((a, b) => a - b);
-
+  // fills and appends the remaining bombs output
   remainingBombs.innerHTML = `Bombe rimanenti: ${generatedBombs.length}`;
   document.body.append(remainingBombs);
-  checkWin.innerHTML = "Controlla se hai vinto";
-  document.body.append(checkWin);
 
+  // number of cells in a row
   let cellsInARow = Math.sqrt(createdCells.length);
 
   for (let i = 0; i < createdCells.length; i++) {
+
+    // sets the current cell
     let thisCell= createdCells[i];
+
+    // listens for the click on a cell
     thisCell.addEventListener("click", function() {
+
+      // if the cell was already clicked or is flagged as a possible bomb, nothing happens and waits for another click
       if (this.classList.contains("alreadyClicked") || this.classList.contains("marked")) {
         return;
       }
+      // if the cell is a bomb sets some style, outputs a message to start a new game or not
       if (generatedBombs.includes(i)) {
         this.style.color = "#e1e1e1";
         this.style.backgroundColor = "#292745";
@@ -112,7 +135,9 @@ playButton.addEventListener("click", function () {
             containerElement.innerHTML = "";
           }, 1000);
         }
-      } else if (!((i % cellsInARow != 0 && generatedBombs.includes(i - cellsInARow - 1)) || generatedBombs.includes(i - cellsInARow) || ((i + 1) % cellsInARow != 0 && generatedBombs.includes(i - cellsInARow + 1)) || (i % cellsInARow != 0 && generatedBombs.includes(i - 1)) || ((i + 1) % cellsInARow != 0 && generatedBombs.includes(i + 1)) || (i % cellsInARow != 0 && generatedBombs.includes(i + cellsInARow - 1)) || generatedBombs.includes(i + cellsInARow) || ((i + 1) % cellsInARow != 0 && generatedBombs.includes(i + cellsInARow + 1)))) {
+      }
+      // else if the cell has no adjacent bombs, then the click expands to the adjacent cells also
+      else if (!((i % cellsInARow != 0 && generatedBombs.includes(i - cellsInARow - 1)) || generatedBombs.includes(i - cellsInARow) || ((i + 1) % cellsInARow != 0 && generatedBombs.includes(i - cellsInARow + 1)) || (i % cellsInARow != 0 && generatedBombs.includes(i - 1)) || ((i + 1) % cellsInARow != 0 && generatedBombs.includes(i + 1)) || (i % cellsInARow != 0 && generatedBombs.includes(i + cellsInARow - 1)) || generatedBombs.includes(i + cellsInARow) || ((i + 1) % cellsInARow != 0 && generatedBombs.includes(i + cellsInARow + 1)))) {
         this.classList.add("alreadyClicked");
         this.style.backgroundColor = "gray";
         this.style.border = "1px solid #e1e1e1";
@@ -171,7 +196,9 @@ playButton.addEventListener("click", function () {
           createdCells[i + cellsInARow - 1].click();
           createdCells[i + cellsInARow].click();
         }
-      } else {
+      }
+      // else if the cell has adjacent bombs calculates the number of bombs around it and shows it
+      else {
 
         this.classList.add("alreadyClicked");
 
@@ -230,8 +257,11 @@ playButton.addEventListener("click", function () {
         this.style.border = "1px solid #e1e1e1"
         this.innerText = adjacentBombs;
       }
+
+      // increase the score
       score++;
-      console.log(score);
+
+      // check if the score equals the number of "non bombs" cells. if yes you win
       if (score == createdCells.length - generatedBombs.length) {
         if(confirm("HAI VINTO!!! VUOI FARE UN'ALTRA PARTITA?")) {
           setTimeout(() => {
@@ -246,6 +276,7 @@ playButton.addEventListener("click", function () {
       }
     });
 
+    // event listener to add the "marked as bomb" background color with right click
     thisCell.addEventListener("contextmenu", function(e) {
       e.preventDefault();
       this.classList.toggle("marked");
@@ -253,28 +284,4 @@ playButton.addEventListener("click", function () {
       remainingBombs.innerHTML = `Bombe rimanenti: ${generatedBombs.length - markedCells.length}`;
     });
   }
-
-  // let generatedBombsCopy = generatedBombs;
-  // for (let i = 0; i < generatedBombsCopy.length; i++) {
-  //   generatedBombsCopy[i] = `cell${generatedBombsCopy[i]}`;
-  // }
-
-  // checkWin.addEventListener("click", function () {
-
-  //   const cellsNotChoosenNodeList = document.querySelectorAll(".cell:not(.alreadyClicked)");
-  //   const cellsNotChoosenArray = [];
-  //   for (let i = 0; i < cellsNotChoosenNodeList.length; i++) {
-  //     cellsNotChoosenArray.push(cellsNotChoosenNodeList[i].id);
-  //   }
-  //   console.log(cellsNotChoosenArray);
-
-  //   if (generatedBombsCopy.toString() == cellsNotChoosenArray.toString()) {
-  //     if (confirm("HAI VINTO!!! VUOI FARE UN'ALTRA PARTITA?")) {
-  //       setTimeout(() => {
-  //         playButton.click();
-  //       }, 1000);
-  //     }
-  //   }
-  // });
-
 });
