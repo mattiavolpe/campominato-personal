@@ -126,9 +126,15 @@ playButton.addEventListener("click", function () {
       }
       // if the cell is a bomb sets some style, outputs a message to start a new game or not
       if (generatedBombs.includes(i)) {
-        this.style.color = "red";
-        this.style.backgroundColor = "#292745";
-        this.innerHTML = '<i class="fa-solid fa-bomb"></i>';
+        console.log(createdCells, generatedBombs);
+        for (let i = 0; i < createdCells.length; i++) {
+          if (generatedBombs.includes(i)) {
+            createdCells[i].innerHTML = '<i class="fa-solid fa-bomb"></i>';
+            createdCells[i].style.color = "red";
+            createdCells[i].style.backgroundColor = "#292745";
+            createdCells[i].classList.add("alreadyClicked");
+          }
+        }
         if(confirm("HAI PERSO. VUOI FARE UN'ALTRA PARTITA?")) {
           bombFound = true;
           setTimeout(() => {
@@ -269,6 +275,14 @@ playButton.addEventListener("click", function () {
 
       // check if the score equals the number of "non bombs" cells. if yes you win
       if (score == createdCells.length - generatedBombs.length && bombFound != true) {
+        for (let i = 0; i < createdCells.length; i++) {
+          if (generatedBombs.includes(i)) {
+            createdCells[i].innerHTML = '<i class="fa-solid fa-bomb"></i>';
+            createdCells[i].style.color = "red";
+            createdCells[i].style.backgroundColor = "#292745";
+            createdCells[i].classList.add("alreadyClicked");
+          }
+        }
         if(confirm("HAI VINTO!!! VUOI FARE UN'ALTRA PARTITA?")) {
           setTimeout(() => {
             playButton.click();
