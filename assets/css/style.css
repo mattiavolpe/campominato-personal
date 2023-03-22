@@ -4,7 +4,6 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  /* outline: 1px solid black; */
 }
 
 body {
@@ -43,13 +42,11 @@ img {
   background-color: #1e1e1e;
   color: #e1e1e1;
   font-weight: 700;
-  /* box-shadow: inset 0 0 6px 1px #5eabd4; */
 }
 
 .marked {
-  background-color: red;
-  color: #292745;
-  transition: background-color 0.3s, color 0.3s;
+  color: red;
+  background-color: #292745;
 }
 
 #remaining_bombs {
@@ -73,7 +70,6 @@ img {
   align-items: center;
   padding: 0 0.75rem;
   height: 150px;
-  /* background-color: #5eabd4; */
   background: #e1e1e1;
   background: linear-gradient(180deg, #e1e1e1 0%, #e1e1e1 95%, #292745 100%);
 }
