@@ -283,6 +283,11 @@ playButton.addEventListener("click", function () {
     thisCell.addEventListener("contextmenu", function(e) {
       e.preventDefault();
       if (!this.classList.contains("alreadyClicked") && !bombFound) {
+        if(this.classList.contains("marked")) {
+          this.innerHTML = "";
+        } else {
+          this.innerHTML = `<i class="fa-solid fa-flag"></i>`;
+        }
         this.classList.toggle("marked");
         const markedCells = document.querySelectorAll(".marked");
         remainingBombs.innerHTML = `Bombe rimanenti: ${generatedBombs.length - markedCells.length}`;
