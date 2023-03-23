@@ -12,6 +12,7 @@ let score = 0;
 
 // STARTS A NEW GAME WHEN A CLICK ON THE PLAY BUTTON OCCURS
 playButton.addEventListener("click", function() {
+  console.clear();
 
   // GETS THE NUMBER OF CELLS
   const cellsNumber = setCellsNumber(levelSelectorElement);
@@ -66,14 +67,12 @@ function createNewGrid(totalCells, container) {
 
 
 
-
 // HERE START THE EXPERIMENTAL IMPLEMENTATION
 
 // div that outputs the number of remaining bombs
 const remainingBombs = document.createElement("div");
 
 playButton.addEventListener("click", function () {
-  console.clear();
   score = 0;
 
   // CREATE A CHECKER TO SEE IF A BOMB IS FOUND. I NEED IT TO AVOID "YOU WIN" OUTPUT AFTER "YOU LOOSE", IF LOOSING ON THE LAST POSSIBLE CELL
@@ -102,33 +101,30 @@ playButton.addEventListener("click", function () {
   // number of cells in a row
   let cellsInARow = Math.sqrt(createdCells.length);
 
-  for (let i = 0; i < createdCells.length; i++) {
-
-    // sets the current cell
-    let thisCell= createdCells[i];
+  createdCells.forEach((cell, index) => {
 
     // listens for the click on a cell
-    thisCell.addEventListener("click", function() {
+    cell.addEventListener("click", function() {
 
       if (!bombFound) {
 
         // if the cell was already clicked or is flagged as a possible bomb, nothing happens and waits for another click
-        if (this.classList.contains("alreadyClicked") || this.classList.contains("marked")) {
+        if (cell.classList.contains("alreadyClicked") || cell.classList.contains("marked")) {
           return;
         }
         // if the cell is a bomb sets some style, outputs a message to start a new game or not
-        if (generatedBombs.includes(i)) {
-          for (let i = 0; i < createdCells.length; i++) {
-            if (generatedBombs.includes(i)) {
+        if (generatedBombs.includes(index)) {
+          createdCells.forEach((cell, index) => {
+            if (generatedBombs.includes(index)) {
               bombFound = true;
-              createdCells[i].innerHTML = '<i class="fa-solid fa-bomb"></i>';
-              createdCells[i].style.color = "red";
-              createdCells[i].style.backgroundColor = "#292745";
-              createdCells[i].classList.add("alreadyClicked");
+              cell.innerHTML = '<i class="fa-solid fa-bomb"></i>';
+              cell.style.color = "red";
+              cell.style.backgroundColor = "#292745";
+              cell.classList.add("alreadyClicked");
             }
-          }
-          thisCell.style.color = "#292745";
-          thisCell.style.backgroundColor = "red";
+          })
+          cell.style.color = "#292745";
+          cell.style.backgroundColor = "red";
           if(confirm("HAI PERSO. VUOI FARE UN'ALTRA PARTITA?")) {
             setTimeout(() => {
               playButton.click();
@@ -136,126 +132,125 @@ playButton.addEventListener("click", function () {
           }
         }
         // else if the cell has no adjacent bombs, then the click expands to the adjacent cells also
-        else if (!((i % cellsInARow != 0 && generatedBombs.includes(i - cellsInARow - 1)) || generatedBombs.includes(i - cellsInARow) || ((i + 1) % cellsInARow != 0 && generatedBombs.includes(i - cellsInARow + 1)) || (i % cellsInARow != 0 && generatedBombs.includes(i - 1)) || ((i + 1) % cellsInARow != 0 && generatedBombs.includes(i + 1)) || (i % cellsInARow != 0 && generatedBombs.includes(i + cellsInARow - 1)) || generatedBombs.includes(i + cellsInARow) || ((i + 1) % cellsInARow != 0 && generatedBombs.includes(i + cellsInARow + 1)))) {
-          this.classList.add("alreadyClicked");
-          this.style.backgroundColor = "gray";
-          this.style.border = "1px solid #e1e1e1";
+        else if (!((index % cellsInARow != 0 && generatedBombs.includes(index - cellsInARow - 1)) || generatedBombs.includes(index - cellsInARow) || ((index + 1) % cellsInARow != 0 && generatedBombs.includes(index - cellsInARow + 1)) || (index % cellsInARow != 0 && generatedBombs.includes(index - 1)) || ((index + 1) % cellsInARow != 0 && generatedBombs.includes(index + 1)) || (index % cellsInARow != 0 && generatedBombs.includes(index + cellsInARow - 1)) || generatedBombs.includes(index + cellsInARow) || ((index + 1) % cellsInARow != 0 && generatedBombs.includes(index + cellsInARow + 1)))) {
+          cell.classList.add("alreadyClicked");
+          cell.style.backgroundColor = "gray";
+          cell.style.border = "1px solid #e1e1e1";
 
-          if ((i >= cellsInARow) && (i < createdCells.length - cellsInARow) && (i % cellsInARow != 0) && ((i + 1) % cellsInARow != 0)) {
-            createdCells[i - cellsInARow - 1].click();
-            createdCells[i - cellsInARow].click();
-            createdCells[i - cellsInARow + 1].click();
-            createdCells[i - 1].click();
-            createdCells[i + 1].click();
-            createdCells[i + cellsInARow - 1].click();
-            createdCells[i + cellsInARow].click();
-            createdCells[i + cellsInARow + 1].click();
-          } else if (i < cellsInARow) {
-            if (i == 0) {
-              createdCells[i + 1].click();
-              createdCells[i + cellsInARow].click();
-              createdCells[i + cellsInARow + 1].click();
-            } else if (i == cellsInARow - 1) {
-              createdCells[i - 1].click();
-              createdCells[i + cellsInARow - 1].click();
-              createdCells[i + cellsInARow].click();
+          if ((index >= cellsInARow) && (index < createdCells.length - cellsInARow) && (index % cellsInARow != 0) && ((index + 1) % cellsInARow != 0)) {
+            createdCells[index - cellsInARow - 1].click();
+            createdCells[index - cellsInARow].click();
+            createdCells[index - cellsInARow + 1].click();
+            createdCells[index - 1].click();
+            createdCells[index + 1].click();
+            createdCells[index + cellsInARow - 1].click();
+            createdCells[index + cellsInARow].click();
+            createdCells[index + cellsInARow + 1].click();
+          } else if (index < cellsInARow) {
+            if (index == 0) {
+              createdCells[index + 1].click();
+              createdCells[index + cellsInARow].click();
+              createdCells[index + cellsInARow + 1].click();
+            } else if (index == cellsInARow - 1) {
+              createdCells[index - 1].click();
+              createdCells[index + cellsInARow - 1].click();
+              createdCells[index + cellsInARow].click();
             } else {
-              createdCells[i - 1].click();
-              createdCells[i + 1].click();
-              createdCells[i + cellsInARow - 1].click();
-              createdCells[i + cellsInARow].click();
-              createdCells[i + cellsInARow + 1].click();
+              createdCells[index - 1].click();
+              createdCells[index + 1].click();
+              createdCells[index + cellsInARow - 1].click();
+              createdCells[index + cellsInARow].click();
+              createdCells[index + cellsInARow + 1].click();
             }
-          } else if (i >= createdCells.length - cellsInARow) {
-            if (i == createdCells.length - cellsInARow) {
-              createdCells[i - cellsInARow].click();
-              createdCells[i - cellsInARow + 1].click();
-              createdCells[i + 1].click();
-            } else if (i == createdCells.length - 1) {
-              createdCells[i - cellsInARow - 1].click();
-              createdCells[i - cellsInARow].click();
-              createdCells[i - 1].click();
+          } else if (index >= createdCells.length - cellsInARow) {
+            if (index == createdCells.length - cellsInARow) {
+              createdCells[index - cellsInARow].click();
+              createdCells[index - cellsInARow + 1].click();
+              createdCells[index + 1].click();
+            } else if (index == createdCells.length - 1) {
+              createdCells[index - cellsInARow - 1].click();
+              createdCells[index - cellsInARow].click();
+              createdCells[index - 1].click();
             } else {
-              createdCells[i - cellsInARow - 1].click();
-              createdCells[i - cellsInARow].click();
-              createdCells[i - cellsInARow + 1].click();
-              createdCells[i - 1].click();
-              createdCells[i + 1].click();
+              createdCells[index - cellsInARow - 1].click();
+              createdCells[index - cellsInARow].click();
+              createdCells[index - cellsInARow + 1].click();
+              createdCells[index - 1].click();
+              createdCells[index + 1].click();
             }
-          } else if (i % cellsInARow == 0) {
-            createdCells[i - cellsInARow].click();
-            createdCells[i - cellsInARow + 1].click();
-            createdCells[i + 1].click();
-            createdCells[i + cellsInARow].click();
-            createdCells[i + cellsInARow + 1].click();
+          } else if (index % cellsInARow == 0) {
+            createdCells[index - cellsInARow].click();
+            createdCells[index - cellsInARow + 1].click();
+            createdCells[index + 1].click();
+            createdCells[index + cellsInARow].click();
+            createdCells[index + cellsInARow + 1].click();
           } else {
-            createdCells[i - cellsInARow - 1].click();
-            createdCells[i - cellsInARow].click();
-            createdCells[i - 1].click();
-            createdCells[i + cellsInARow - 1].click();
-            createdCells[i + cellsInARow].click();
+            createdCells[index - cellsInARow - 1].click();
+            createdCells[index - cellsInARow].click();
+            createdCells[index - 1].click();
+            createdCells[index + cellsInARow - 1].click();
+            createdCells[index + cellsInARow].click();
           }
         }
-
         // else if the cell has adjacent bombs calculates the number of bombs around it and shows it
         else {
 
-          this.classList.add("alreadyClicked");
+          cell.classList.add("alreadyClicked");
 
           let adjacentBombs = 0;
-          if (i % cellsInARow != 0 && generatedBombs.includes(i - cellsInARow - 1)) {
+          if (index % cellsInARow != 0 && generatedBombs.includes(index - cellsInARow - 1)) {
             adjacentBombs++;
           }
-          if (generatedBombs.includes(i - cellsInARow)) {
+          if (generatedBombs.includes(index - cellsInARow)) {
             adjacentBombs++;
           }
-          if ((i + 1) % cellsInARow != 0 && generatedBombs.includes(i - cellsInARow + 1)) {
+          if ((index + 1) % cellsInARow != 0 && generatedBombs.includes(index - cellsInARow + 1)) {
             adjacentBombs++;
           }
-          if (i % cellsInARow != 0 && generatedBombs.includes(i - 1)) {
+          if (index % cellsInARow != 0 && generatedBombs.includes(index - 1)) {
             adjacentBombs++;
           }
-          if ((i + 1) % cellsInARow != 0 && generatedBombs.includes(i + 1)) {
+          if ((index + 1) % cellsInARow != 0 && generatedBombs.includes(index + 1)) {
             adjacentBombs++;
           }
-          if (i % cellsInARow != 0 && generatedBombs.includes(i + cellsInARow - 1)) {
+          if (index % cellsInARow != 0 && generatedBombs.includes(index + cellsInARow - 1)) {
             adjacentBombs++;
           }
-          if (generatedBombs.includes(i + cellsInARow)) {
+          if (generatedBombs.includes(index + cellsInARow)) {
             adjacentBombs++;
           }
-          if ((i + 1) % cellsInARow != 0 && generatedBombs.includes(i + cellsInARow + 1)) {
+          if ((index + 1) % cellsInARow != 0 && generatedBombs.includes(index + cellsInARow + 1)) {
             adjacentBombs++;
           }
           switch(adjacentBombs) {
             case 1:
-              this.style.color = "blue";
+              cell.style.color = "blue";
               break;
             case 2:
-              this.style.color = "red";
+              cell.style.color = "red";
               break;
             case 3:
-              this.style.color = "green";
+              cell.style.color = "green";
               break;
             case 4:
-              this.style.color = "purple";
+              cell.style.color = "purple";
               break;
             case 5:
-              this.style.color = "maroon";
+              cell.style.color = "maroon";
               break;
             case 6:
-              this.style.color = "turquoise";
+              cell.style.color = "turquoise";
               break;
             case 7:
-              this.style.color = "black";
+              cell.style.color = "black";
               break;
             case 8:
-              this.style.color = "#e1e1e1";
+              cell.style.color = "#e1e1e1";
               break;
           }
-          this.style.backgroundColor = "gray";
-          this.style.border = "1px solid #e1e1e1"
-          this.innerText = adjacentBombs;
+          cell.style.backgroundColor = "gray";
+          cell.style.border = "1px solid #e1e1e1"
+          cell.innerText = adjacentBombs;
         }
 
         // increase the score
@@ -264,14 +259,14 @@ playButton.addEventListener("click", function () {
 
         // check if the score equals the number of "non bombs" cells. if yes you win
         if (score == createdCells.length - generatedBombs.length && bombFound != true) {
-          for (let i = 0; i < createdCells.length; i++) {
-            if (generatedBombs.includes(i)) {
-              createdCells[i].innerHTML = '<i class="fa-solid fa-bomb"></i>';
-              createdCells[i].style.color = "red";
-              createdCells[i].style.backgroundColor = "#292745";
-              createdCells[i].classList.add("alreadyClicked");
+          createdCells.forEach((cell, index) => {
+            if (generatedBombs.includes(index)) {
+              cell.innerHTML = '<i class="fa-solid fa-bomb"></i>';
+              cell.style.color = "red";
+              cell.style.backgroundColor = "#292745";
+              cell.classList.add("alreadyClicked");
             }
-          }
+          })
           if(confirm("HAI VINTO!!! VUOI FARE UN'ALTRA PARTITA?")) {
             setTimeout(() => {
               playButton.click();
@@ -282,18 +277,18 @@ playButton.addEventListener("click", function () {
     });
 
     // event listener to add the "marked as bomb" background color with right click
-    thisCell.addEventListener("contextmenu", function(e) {
+    cell.addEventListener("contextmenu", function(e) {
       e.preventDefault();
-      if (!this.classList.contains("alreadyClicked") && !bombFound) {
-        if(this.classList.contains("marked")) {
-          this.innerHTML = "";
+      if (!cell.classList.contains("alreadyClicked") && !bombFound) {
+        if(cell.classList.contains("marked")) {
+          cell.innerHTML = "";
         } else {
-          this.innerHTML = `<i class="fa-solid fa-flag"></i>`;
+          cell.innerHTML = `<i class="fa-solid fa-flag"></i>`;
         }
-        this.classList.toggle("marked");
+        cell.classList.toggle("marked");
         const markedCells = document.querySelectorAll(".marked");
         remainingBombs.innerHTML = `Bombe rimanenti: ${generatedBombs.length - markedCells.length}`;
       }
     });
-  }
+  });
 });
