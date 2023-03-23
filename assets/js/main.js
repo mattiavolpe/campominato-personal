@@ -127,6 +127,8 @@ playButton.addEventListener("click", function () {
               createdCells[i].classList.add("alreadyClicked");
             }
           }
+          thisCell.style.color = "#292745";
+          thisCell.style.backgroundColor = "red";
           if(confirm("HAI PERSO. VUOI FARE UN'ALTRA PARTITA?")) {
             setTimeout(() => {
               playButton.click();
